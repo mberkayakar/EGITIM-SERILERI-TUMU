@@ -29,9 +29,7 @@ namespace AKAR.WebAPI
             services.AddControllers();
             // service.AddControllerVithViews() MVC projesi oldugu zaman ekleniyordu. Bu aşamada sadece Json döneceği
             // herhangi bir view döndürmeyeceğinden kaynaklı olarak biz sadece AddControllers Yazacağız.
-            
-            
-            
+             
             
             services.AddSwaggerGen(c =>
             {
