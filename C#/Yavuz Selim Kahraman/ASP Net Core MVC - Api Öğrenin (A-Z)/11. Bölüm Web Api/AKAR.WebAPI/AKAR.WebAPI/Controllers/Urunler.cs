@@ -11,30 +11,26 @@ namespace AKAR.WebAPI.Controllers
     [Route("{controller}")]
     public class Urunler:ControllerBase
     {
-
-
-
+         
         [HttpGet]
         public IActionResult GetAll()
         {
             using (var context = new MyDbContext())
             {
                 var list = context.Products.ToList();
-                if (list.Count != 0)
+                if (list.Count == 0)
                 {
                     return NotFound("Sistemde Yüklü Herhangi Bir Ürün Bulunmamaktadır");
                 }
                 else
                 {
-                    Ok(list);
+                    return Ok(list);
                 }
             }
 
             return BadRequest("Veritabanına Erişim Sağlanamadı");
         }
-
-
-
+         
         [HttpGet]
         [Route("{id}")]
         public IActionResult GetById(int id )
@@ -42,13 +38,13 @@ namespace AKAR.WebAPI.Controllers
             using (var context = new MyDbContext())
             {
                 var list = context.Products.Where(x=> x.Id == id).ToList();
-                if (list.Count != 0)
+                if (list.Count == 0)
                 {
                     return NotFound("Böyle Bir ürün sistemde bulunmamaktadır . ");
                 }
                 else
                 {
-                    Ok(list);
+                    return Ok(list);
                 }
             }
             return BadRequest("Veritabanına Erişim Sağlanamadı");
@@ -76,9 +72,8 @@ namespace AKAR.WebAPI.Controllers
 
         }
 
-
-
-        [HttpPut()]
+         
+        [HttpPut("{id}")]
 
         public IActionResult Guncelle(Product p )
         {
@@ -102,11 +97,11 @@ namespace AKAR.WebAPI.Controllers
 
 
         [HttpDelete("{id}")]
-        public IActionResult Sil(int p )
+        public IActionResult Sil(int id)
         {
             using (var context = new MyDbContext())
             {
-                var eskiveri = context.Products.Find(p );
+                var eskiveri = context.Products.Find(id);
                 if (eskiveri!= null)
                 {
                     context.Products.Remove(eskiveri);
