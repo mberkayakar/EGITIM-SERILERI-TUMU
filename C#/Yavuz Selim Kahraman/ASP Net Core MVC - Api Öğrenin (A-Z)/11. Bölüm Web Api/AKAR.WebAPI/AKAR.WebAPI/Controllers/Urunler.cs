@@ -1,7 +1,9 @@
 ﻿using AKAR.WebAPI.Data;
 using AKAR.WebAPI.Model;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.IO;
 using System.Linq;
 
 namespace AKAR.WebAPI.Controllers
@@ -113,5 +115,18 @@ namespace AKAR.WebAPI.Controllers
 
         }
 
+        [HttpPost("{file}")]
+
+        public IActionResult Dosyayukleme( IFormFile fromfile)
+        {
+            var NewName = Guid.NewGuid() + "."+ Path.GetExtension(fromfile.FileName);
+            var path = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot",NewName);
+            var stream = new FileStream(path,FileMode.Create);
+            fromfile.CopyTo(stream);
+            return Created(String.Empty,fromfile);
+        }
+
+
     }
 }
+ 
